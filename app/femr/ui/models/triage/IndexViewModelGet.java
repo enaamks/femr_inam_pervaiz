@@ -78,9 +78,9 @@ public class IndexViewModelGet {
     public SettingItem getSettings() {
         return settings;
     }
-
     public void setSettings(SettingItem settings) {
         this.settings = settings;
+
     }
 
     public Map<String, String> getPossibleAgeClassifications() {

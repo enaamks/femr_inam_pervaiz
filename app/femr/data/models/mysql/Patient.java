@@ -40,6 +40,8 @@ public class Patient implements IPatient {
     private String lastName;
     @Column(name = "age")
     private Date age;
+    @Column(name= "age_flag")
+    private String age_flag;
     @Column(name = "sex", nullable = true)
     private String sex;
     @Column(name = "address", nullable = true)
@@ -95,10 +97,13 @@ public class Patient implements IPatient {
     }
 
     @Override
-    public Date getAge() {
-        return age;
-    }
-
+    public Date getAge() {    return age;    }
+    @Override
+    public String getAge_flag()
+    {return age_flag;}
+    @Override
+    public void setAge_flag(String age_flag)
+    {this.age_flag =age_flag;}
     @Override
     public void setAge(Date age) {
         this.age = age;

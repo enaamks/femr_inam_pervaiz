@@ -42,7 +42,11 @@ public interface IPatient {
 
     Date getAge();
 
+    String getAge_flag();
+
     void setAge(Date age);
+
+    void setAge_flag(String age_flag);
 
     String getSex();
 

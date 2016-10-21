@@ -18,10 +18,7 @@ import org.joda.time.DateTime;
 import play.data.Form;
 import play.mvc.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Security.Authenticated(FEMRAuthenticated.class)
@@ -152,6 +149,7 @@ public class TriageController extends Controller {
     */
     public Result indexPost(int id) {
 
+        System.out.println("Calling submit patient.");
         IndexViewModelPost viewModel = IndexViewModelForm.bindFromRequest().get();
         CurrentUser currentUser = sessionService.retrieveCurrentUserSession();
 
@@ -287,9 +285,18 @@ public class TriageController extends Controller {
         patient.setUserId(currentUser.getId());
         patient.setFirstName(viewModelPost.getFirstName());
         patient.setLastName(viewModelPost.getLastName());
+        System.out.println("aagggge"+viewModelPost.getAge_flag());
+        patient.setAge_flag(viewModelPost.getAge_flag());
         if (viewModelPost.getAge() != null) {
             patient.setBirth(viewModelPost.getAge());
-        }
+            patient.setAge_flag(viewModelPost.getAge_flag());
+        } /*else {
+            int no_of_days = - (patient.getYearsOld().intValue()*365+patient.getMonthsOld().intValue()*30);
+            Calendar cal= Calendar.getInstance();
+            cal.add(Calendar.DATE, no_of_days);
+          patient.setBirth(cal.getTime());
+
+        }*/
         patient.setSex(viewModelPost.getSex());
         patient.setAddress(viewModelPost.getAddress());
         patient.setCity(viewModelPost.getCity());

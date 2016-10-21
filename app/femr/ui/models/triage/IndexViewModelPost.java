@@ -30,8 +30,10 @@ public class IndexViewModelPost {
     private String address;
     private String city;
     private Date age;
+    private String age_flag;
     private String ageClassification;
     private String sex;
+    public String abc;
     public Boolean deletePhoto; //flag to determine if user would like to delete image file
     //begin vitals
     private Integer bloodPressureSystolic;
@@ -109,6 +111,13 @@ public class IndexViewModelPost {
 
     public void setAge(Date age) {
         this.age = age;
+    }
+    public String getAge_flag() {
+        return age_flag;
+    }
+
+    public void setAge_flag(String age_flag) {
+        this.age_flag = age_flag;
     }
 
     public String getSex() {
