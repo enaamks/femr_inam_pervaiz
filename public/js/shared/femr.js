@@ -294,3 +294,8 @@ function calculateBMIScore(system, weight, height) {
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
+
+document.getElementById('age').onchange = function (e) {
+
+    document.getElementById('age_flag').value = 'Y';
+};
