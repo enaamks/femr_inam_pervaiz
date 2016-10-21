@@ -37,6 +37,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Iterator;
 import java.util.List;
 
 @Security.Authenticated(FEMRAuthenticated.class)
@@ -423,8 +424,11 @@ public class PDFController extends Controller {
         prescriptionCell.setColspan(3);
         table.addCell(prescriptionCell);
         table.completeRow();
+
         if(!prescriptionItems.isEmpty()) {
             //Create Dispensed Table.
+
+
             Paragraph originalMedsTitle = new Paragraph("Original", getTitleFont());
             PdfPCell cell = new PdfPCell(originalMedsTitle);
 
@@ -432,8 +436,12 @@ public class PDFController extends Controller {
 
             Paragraph replacedMedsTitle = new Paragraph("Replaced", getTitleFont());
             cell = new PdfPCell(replacedMedsTitle);
-
             table.addCell(cell);
+            Paragraph amoutdis = new Paragraph("Amount", getTitleFont());
+            cell = new PdfPCell(amoutdis);
+            table.addCell(cell);
+
+
 
             table.completeRow();
 
@@ -441,24 +449,49 @@ public class PDFController extends Controller {
 
                 if (prescription.getOriginalMedicationName() != null) {
 
-                    //jank way to strikethrough
-                    Chunk strikeThrough = new Chunk(prescription.getOriginalMedicationName(), getValueFont());
-                    strikeThrough.setUnderline(0.1f, 3f);   // Thickness, the y axis location of
-                    Paragraph originalMedName = new Paragraph(strikeThrough);
-                    cell = new PdfPCell(originalMedName);
-
-                    table.addCell(cell);
-
-                    Paragraph replacedMedName = new Paragraph(prescription.getName(), getValueFont());
-                    cell = new PdfPCell(replacedMedName);
-                    table.addCell(cell);
-                } else {
+                    //Modified By Inam Ullah and M.Pervaiz
+//                    String ValueResult = String.valueOf(prescription.getAmount()) + prescription.getOriginalMedicationName();
+//                    Chunk strikeThrough = new Chunk(ValueResult, getValueFont());
+//                    strikeThrough.setUnderline(0.1f, 3f);   // Thickness, the y axis location of
+//                    Paragraph originalMedName = new Paragraph(strikeThrough);
+//                    cell = new PdfPCell(originalMedName);
+//                    table.addCell(cell);
+//
+//                    Paragraph replacedMedName = new Paragraph(ValueResult, getValueFont());
+//                   // Paragraph replacedMedNameAmount = new Paragraph(String.valueOf(prescription.getAmount()), getValueFont());
+//                    cell = new PdfPCell(replacedMedName);
+//                    table.addCell(cell);
                     Paragraph medName = new Paragraph(prescription.getName(), getValueFont());
                     cell = new PdfPCell(medName);
                     table.addCell(cell);
 
                     Paragraph blankCell = new Paragraph(" ", getValueFont());
                     cell = new PdfPCell(blankCell);
+                    table.addCell(cell);
+
+                    Paragraph amountdisplay = new Paragraph("$ "+String.valueOf(prescription.getAmount()), getValueFont());
+                    cell = new PdfPCell(amountdisplay);
+                    table.addCell(cell);
+                } else {
+                    String ValueResult2;
+                    if(prescription.getName() == null){
+                        ValueResult2 = String.valueOf(prescription.getAmount()) +" " + "N/A";
+                    }else {
+                        ValueResult2 = String.valueOf(prescription.getAmount())+" " + prescription.getName();
+                    }
+
+                  //  String ValueResult2 = String.valueOf(prescription.getAmount()) + prescription.getOriginalMedicationName();
+                    //Paragraph medName = new Paragraph(ValueResult2, getValueFont());
+                    Paragraph medName = new Paragraph(prescription.getName(), getValueFont());
+                    cell = new PdfPCell(medName);
+                    table.addCell(cell);
+
+                    Paragraph blankCell = new Paragraph(" ", getValueFont());
+                    cell = new PdfPCell(blankCell);
+                    table.addCell(cell);
+
+                    Paragraph amountdisplay = new Paragraph("$ "+String.valueOf(prescription.getAmount()), getValueFont());
+                    cell = new PdfPCell(amountdisplay);
                     table.addCell(cell);
                 }
                 table.completeRow();
