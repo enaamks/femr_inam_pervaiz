@@ -20,7 +20,6 @@ package femr.ui.controllers;
 
 import com.google.gson.Gson;
 import com.google.inject.Inject;
-import femr.business.services.core.IMedicationService;
 import femr.business.services.core.IMissionTripService;
 import femr.common.dtos.ServiceResponse;
 import femr.common.models.*;
@@ -38,6 +37,7 @@ import femr.util.stringhelpers.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import play.data.Form;
 import play.mvc.Controller;
+import femr.business.services.core.IMedicationService;
 import play.mvc.Result;
 import play.mvc.Security;
 

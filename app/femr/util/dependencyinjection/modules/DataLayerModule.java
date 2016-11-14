@@ -20,11 +20,11 @@ package femr.util.dependencyinjection.modules;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
-import femr.data.models.core.*;
 import femr.data.daos.IRepository;
 import femr.data.daos.Repository;
 import femr.data.daos.core.IMedicationRepository;
 import femr.data.daos.system.MedicationRepository;
+import femr.data.models.core.*;
 import femr.data.models.core.research.IResearchEncounter;
 import femr.data.models.core.research.IResearchEncounterVital;
 import femr.util.dependencyinjection.providers.*;

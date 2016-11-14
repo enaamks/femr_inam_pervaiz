@@ -1,0 +1,8 @@
+2016-11-13 13:26:43,757 [INFO] from play.api.libs.concurrent.ActorSystemProvider in pool-4-thread-1 - Starting application default Akka system: application
+2016-11-13 13:26:44,002 [INFO] from play.core.server.NettyServer$ in pool-4-thread-1 - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+2016-11-13 13:27:09,567 [INFO] from application in ForkJoinPool-1-worker-1 - Creating Pool for datasource 'default'
+2016-11-13 13:27:10,989 [INFO] from play.api.db.DefaultDBApi in ForkJoinPool-1-worker-1 - Database [default] connected at jdbc:mysql://localhost/femr_testdb?characterEncoding=UTF-8
+2016-11-13 13:27:13,465 [INFO] from play.api.libs.concurrent.ActorSystemProvider in ForkJoinPool-1-worker-1 - Starting application default Akka system: application
+2016-11-13 13:27:14,739 [INFO] from play.api.Play$ in ForkJoinPool-1-worker-1 - Application started (Dev)
+2016-11-13 14:29:23,624 [INFO] from play.api.libs.concurrent.ActorSystemProvider in pool-4-thread-1 - Shutdown application default Akka system: application
+2016-11-13 14:29:23,754 [INFO] from application in pool-4-thread-1 - Shutting down connection pool.

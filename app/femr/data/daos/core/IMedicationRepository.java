@@ -1,6 +1,8 @@
 package femr.data.daos.core;
 
+import com.avaje.ebean.ExpressionList;
 import femr.data.models.core.*;
+import femr.data.models.mysql.Medication;
 
 import java.util.List;
 
@@ -40,7 +42,7 @@ public interface IMedicationRepository {
      * @param medicationId of the medication, not null
      * @param isDeleted to delete or un-delete, may be true or not true
      */
-    IMedication deleteMedication (Integer medicationId, boolean isDeleted);
+    IMedication deleteMedication(Integer medicationId, boolean isDeleted);
 
     /**
      *  Create new medication in the database
@@ -56,5 +58,9 @@ public interface IMedicationRepository {
      * @return
      */
     List<? extends IMedication> retrieveAllMedicationByTripId(Integer tripId);
+
+    IMedication findOne(int medicationID);
+
+    void delete(IMedication medication);
 }
 
