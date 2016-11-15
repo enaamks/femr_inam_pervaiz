@@ -60,7 +60,7 @@ Seq[Any](format.raw/*3.1*/("""<div class="tripOptionsWrap">
 object tripsMenu extends tripsMenu_Scope0.tripsMenu_Scope1.tripsMenu
               /*
                   -- GENERATED --
-                  DATE: Wed Nov 09 11:47:21 CST 2016
+                  DATE: Mon Nov 14 20:26:18 CST 2016
                   SOURCE: C:/Users/Inam Khan/Documents/GitHub/Assginement/femr_inam_pervaiz/app/femr/ui/views/partials/admin/trips/tripsMenu.scala.html
                   HASH: 30a0e19f1cc9c5233045c82966977b02b037e925
                   MATRIX: 951->59|1022->104|1044->118|1076->130|1248->276|1270->290|1301->301|1473->447|1495->461|1527->473

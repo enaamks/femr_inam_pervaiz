@@ -81,7 +81,7 @@ Seq[Any](format.raw/*1.106*/("""
 object manage extends manage_Scope0.manage
               /*
                   -- GENERATED --
-                  DATE: Wed Nov 09 11:47:19 CST 2016
+                  DATE: Mon Nov 14 20:26:17 CST 2016
                   SOURCE: C:/Users/Inam Khan/Documents/GitHub/Assginement/femr_inam_pervaiz/app/femr/ui/views/admin/configure/manage.scala.html
                   HASH: 7a2cf2bcb773d47fd93c185c3a8d01bad2896707
                   MATRIX: 842->1|1123->220|1147->236|1227->240|1263->250|1319->280|1333->286|1397->330|1446->105|1476->213|1508->339|1539->344|1606->402|1646->404|1679->411|1694->417|1751->465|1791->467|1828->477|2007->629|2066->672|2106->674|2152->692|2223->736|2247->739|2397->862|2421->865|2451->868|2470->878|2510->880|2539->881|2589->899|2619->900|2717->967|2756->979|2864->1057

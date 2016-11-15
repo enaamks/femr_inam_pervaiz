@@ -56,7 +56,7 @@ Seq[Any](format.raw/*1.58*/("""
 object toggleButton extends toggleButton_Scope0.toggleButton
               /*
                   -- GENERATED --
-                  DATE: Wed Nov 09 11:47:21 CST 2016
+                  DATE: Mon Nov 14 20:26:18 CST 2016
                   SOURCE: C:/Users/Inam Khan/Documents/GitHub/Assginement/femr_inam_pervaiz/app/femr/ui/views/partials/admin/toggleButton.scala.html
                   HASH: 5c371b4e27933722b9a7a34fee2c1f8f3bdf67f5
                   MATRIX: 811->1|962->57|992->62|1016->78|1055->80|1087->86|1178->151|1200->153|1241->178|1252->183|1289->184|1321->190|1413->256|1435->258|1486->280

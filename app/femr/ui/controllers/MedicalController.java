@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 @Security.Authenticated(FEMRAuthenticated.class)
 @AllowedRoles({Roles.PHYSICIAN, Roles.PHARMACIST, Roles.NURSE})
-public class MedicalController extends Controller {
+public class MedicalController extends Controller implements MedicalControllerService {
 
     private final Form<EditViewModelPost> createViewModelPostForm = Form.form(EditViewModelPost.class);
     private final Form<UpdateVitalsModel> updateVitalsModelForm = Form.form(UpdateVitalsModel.class);

@@ -34,14 +34,18 @@ public class BaseTest {
         //conf.put(  "db.default.url","jdbc:mysql://localhost/femr_testdb?characterEncoding=UTF-8");
         conf.put("db.default.username","femrdb");
         conf.put("db.default.password","femrdb");
-        conf.put("ebean.default", "models.*,femr.data.models.*");
-       // conf.put("ebean.default", "models.*");
-        conf.put("play.evolutions.db.default.enabled","true");
-        conf.put("play.evolutions.enabled","true");
+        conf.put( "ebean.default", "models.*, femr.data.models.*");
+        //conf.put("ebean.default", "models.*, femr.data.models.*");
+        //conf.put("ebean.default", " femr.data.models.*");
+        conf.put("play.evolutions.db.default.enabled","false");
+        conf.put("play.evolutions.enabled","false");
        // conf.put(  "play.evolutions.db.default.autoApply","true");
+        System.out.println("To check the Map List " + conf);
 
         app = Helpers.fakeApplication(conf);
+        System.out.println("To check before Helper is start or not : " + app);
         Helpers.start(app);
+        System.out.println("To check After Helper is start or not : " + app);
     }
 
     @AfterClass

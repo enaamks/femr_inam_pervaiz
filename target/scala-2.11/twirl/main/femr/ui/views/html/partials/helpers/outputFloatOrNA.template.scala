@@ -56,7 +56,7 @@ Seq[Any](format.raw/*1.27*/("""
 object outputFloatOrNA extends outputFloatOrNA_Scope0.outputFloatOrNA
               /*
                   -- GENERATED --
-                  DATE: Wed Nov 09 11:47:21 CST 2016
+                  DATE: Mon Nov 14 20:26:18 CST 2016
                   SOURCE: C:/Users/Inam Khan/Documents/GitHub/Assginement/femr_inam_pervaiz/app/femr/ui/views/partials/helpers/outputFloatOrNA.scala.html
                   HASH: 55f62a20821ba8fead2ea403441b3f5c24e676dc
                   MATRIX: 799->1|919->26|951->33|977->51|1015->52|1047->58|1070->64|1081->68|1118->69|1150->76|1176->82

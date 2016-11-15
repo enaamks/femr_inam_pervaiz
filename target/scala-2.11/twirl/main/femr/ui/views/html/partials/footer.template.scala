@@ -60,7 +60,7 @@ Seq[Any](format.raw/*1.1*/("""<footer>
 object footer extends footer_Scope0.footer
               /*
                   -- GENERATED --
-                  DATE: Wed Nov 09 11:47:21 CST 2016
+                  DATE: Mon Nov 14 20:26:18 CST 2016
                   SOURCE: C:/Users/Inam Khan/Documents/GitHub/Assginement/femr_inam_pervaiz/app/femr/ui/views/partials/footer.scala.html
                   HASH: 7eeb7d4a8e3c9b1b2dfd0644532f4252d9161068
                   MATRIX: 846->0
