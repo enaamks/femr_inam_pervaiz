@@ -5053,3 +5053,7 @@ java.lang.IllegalStateException: Bean class femr.data.models.mysql.ChiefComplain
 2016-11-14 21:08:04,970 [INFO] from play.api.libs.concurrent.ActorSystemProvider in main - Starting application default Akka system: application
 2016-11-14 21:08:05,905 [INFO] from play.api.libs.concurrent.ActorSystemProvider in main - Shutdown application default Akka system: application
 2016-11-14 21:08:05,989 [INFO] from application in main - Shutting down connection pool.
+2016-11-14 22:31:26,304 [INFO] from application in main - Creating Pool for datasource 'default'
+2016-11-14 22:31:30,989 [INFO] from play.api.libs.concurrent.ActorSystemProvider in main - Starting application default Akka system: application
+2016-11-14 22:31:31,813 [INFO] from play.api.libs.concurrent.ActorSystemProvider in main - Shutdown application default Akka system: application
+2016-11-14 22:31:32,053 [INFO] from application in main - Shutting down connection pool.

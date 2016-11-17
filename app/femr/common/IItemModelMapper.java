@@ -196,6 +196,17 @@ public interface IItemModelMapper {
                                     String chiefComplaint,
                                     boolean isCustom);
 
+
+    TabFieldItem createTabFieldItem(String name,
+                                    String type,
+                                    String size,
+                                    Integer leftColumnSize,
+                                    Integer rightColumnSize,
+                                    Integer order,
+                                    String placeholder,
+                                    String value,
+                                    String chiefComplaint,
+                                    boolean isCustom);
     /**
      * Generate and provide an instance of TabFieldItem overloaded to include userName
      *

@@ -30,7 +30,7 @@ public class PatientEncounterItem {
     //i.e. when you save the birth date of a patient, you can always tell how old the patient is,
     //it is part of a patient
     private String ageClassification;//infant, teen, etc
-    private List<String> chiefComplaints;
+   // private List<String> chiefComplaints;
     private Boolean isClosed;
 
     private String triageDateOfVisit;
@@ -46,9 +46,9 @@ public class PatientEncounterItem {
     private String pharmacistFullName; //Andrew Display Username instead of Email Address Fix
     private Boolean screenedForDiabetes;
 
-    public PatientEncounterItem(){
-        this.chiefComplaints = new ArrayList<>();
-    }
+   // public PatientEncounterItem(){
+     //   this.chiefComplaints = new ArrayList<>();
+   // }
 
 
     public int getId() {
@@ -75,18 +75,18 @@ public class PatientEncounterItem {
         this.missionTripId = missionTripId;
     }
 
-    public List<String> getChiefComplaints() {
-        return chiefComplaints;
-    }
+   // public List<String> getChiefComplaints() {
+   //     return chiefComplaints;
+   // }
 
-    public void setChiefComplaints(List<String> chiefComplaints) {
-        this.chiefComplaints = chiefComplaints;
-    }
+  //  public void setChiefComplaints(List<String> chiefComplaints) {
+  //      this.chiefComplaints = chiefComplaints;
+   // }
 
-    public void addChiefComplaint(String chiefComplaint){
-        chiefComplaints.add(chiefComplaint);
-    }
-
+//    public void addChiefComplaint(String chiefComplaint){
+    //    chiefComplaints.add(chiefComplaint);
+   // }
+//
     public Boolean getIsClosed() {
         return isClosed;
     }

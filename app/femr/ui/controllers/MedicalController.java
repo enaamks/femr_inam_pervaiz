@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 @Security.Authenticated(FEMRAuthenticated.class)
 @AllowedRoles({Roles.PHYSICIAN, Roles.PHARMACIST, Roles.NURSE})
-public class MedicalController extends Controller implements MedicalControllerService {
+public class MedicalController extends Controller {
 
     private final Form<EditViewModelPost> createViewModelPostForm = Form.form(EditViewModelPost.class);
     private final Form<UpdateVitalsModel> updateVitalsModelForm = Form.form(UpdateVitalsModel.class);
@@ -41,7 +41,8 @@ public class MedicalController extends Controller implements MedicalControllerSe
     private final IVitalService vitalService;
     private final FieldHelper fieldHelper;
     private final IInventoryService inventoryService;
-
+    private  CurrentUser currentUser;
+    // private Index index;
     @Inject
     public MedicalController(ITabService tabService,
                              IEncounterService encounterService,
@@ -64,12 +65,14 @@ public class MedicalController extends Controller implements MedicalControllerSe
 
     public Result indexGet() {
         CurrentUser currentUserSession = sessionService.retrieveCurrentUserSession();
-
+       // currentUserSession = sessionService.retrieveCurrentUserSession();
         return ok(index.render(currentUserSession, null, 0));
     }
 
     public Result indexPost() {
-        CurrentUser currentUserSession = sessionService.retrieveCurrentUserSession();
+        //CurrentUser
+        //currentUserSession = new CurrentUser();
+        CurrentUser  currentUserSession = sessionService.retrieveCurrentUserSession();
 
         String queryString_id = request().body().asFormUrlEncoded().get("id")[0];
         ServiceResponse<Integer> idQueryStringResponse = searchService.parseIdFromQueryString(queryString_id);
@@ -253,151 +256,6 @@ public class MedicalController extends Controller implements MedicalControllerSe
         List<MedicationAdministrationItem> items = medicationAdministrationItemServiceResponse.getResponseObject();
 
         return ok( prescriptionRow.render( items, index, null ) );
-    }
-
-    public Result editPost(int patientId) {
-
-        CurrentUser currentUserSession = sessionService.retrieveCurrentUserSession();
-
-        EditViewModelPost viewModelPost = createViewModelPostForm.bindFromRequest().get();
-
-        //get current patient
-        ServiceResponse<PatientItem> patientItemServiceResponse = searchService.retrievePatientItemByPatientId(patientId);
-        if (patientItemServiceResponse.hasErrors()) {
-            throw new RuntimeException();
-        }
-        PatientItem patientItem = patientItemServiceResponse.getResponseObject();
-
-        //get current encounter
-        ServiceResponse<PatientEncounterItem> patientEncounterServiceResponse = searchService.retrieveRecentPatientEncounterItemByPatientId(patientId);
-        if (patientEncounterServiceResponse.hasErrors()) {
-            throw new RuntimeException();
-        }
-        PatientEncounterItem patientEncounterItem = patientEncounterServiceResponse.getResponseObject();
-        patientEncounterItem = encounterService.checkPatientInToMedical(patientEncounterItem.getId(), currentUserSession.getId()).getResponseObject();
-
-        //get and save problems
-        List<String> problemList = new ArrayList<>();
-        for (ProblemItem pi : viewModelPost.getProblems()) {
-            if (StringUtils.isNotNullOrWhiteSpace(pi.getName())) {
-                problemList.add(pi.getName());
-            }
-        }
-        if (problemList.size() > 0) {
-            encounterService.createProblems(problemList, patientEncounterItem.getId(), currentUserSession.getId());
-        }
-
-        //get tab fields that do not have a related chief complaint and put them into a nice map
-        Map<String, String> tabFieldItemsWithNoRelatedChiefComplaint = new HashMap<>();
-        Map<String, Map<String, String>> tabFieldItemsWithChiefComplaint = new HashMap<>();
-        //get tab fields other than problems
-        for (TabFieldItem tfi : viewModelPost.getTabFieldItems()) {
-            if (StringUtils.isNotNullOrWhiteSpace(tfi.getValue()) && StringUtils.isNullOrWhiteSpace(tfi.getChiefComplaint())) {
-
-                tabFieldItemsWithNoRelatedChiefComplaint.put(tfi.getName(), tfi.getValue());
-            }else if (StringUtils.isNotNullOrWhiteSpace(tfi.getValue()) && StringUtils.isNotNullOrWhiteSpace(tfi.getChiefComplaint())) {
-
-                // Get the tabField Map for chief complaint
-                Map<String, String> tabFieldMap = tabFieldItemsWithChiefComplaint.get(tfi.getChiefComplaint());
-                if (tabFieldMap == null){
-                    // if it does not exist, create it
-                    tabFieldMap = new HashMap<>();
-                }
-                // create and add a tabFieldMap to the Map of Maps for the chief complaint, ummm  yea...
-                tabFieldMap.put(tfi.getName(), tfi.getValue());
-                tabFieldItemsWithChiefComplaint.put(tfi.getChiefComplaint(), tabFieldMap);
-            }
-        }
-        //save the tab fields that do not have a related chief complaint
-        ServiceResponse<List<TabFieldItem>> createPatientEncounterTabFieldsServiceResponse;
-        if (tabFieldItemsWithNoRelatedChiefComplaint.size() > 0) {
-
-            createPatientEncounterTabFieldsServiceResponse = encounterService.createPatientEncounterTabFields(tabFieldItemsWithNoRelatedChiefComplaint, patientEncounterItem.getId(), currentUserSession.getId());
-            if (createPatientEncounterTabFieldsServiceResponse.hasErrors()) {
-
-                throw new RuntimeException();
-            }
-        }
-        //save the tab fields that do have related chief complaint(s)
-        ServiceResponse<List<TabFieldItem>> createPatientEncounterTabFieldsWithChiefComplaintsServiceResponse;
-        if (tabFieldItemsWithChiefComplaint.size() > 0){
-            //call the service once for each existing chief complaint
-            for (Map.Entry<String, Map<String,String>> entry : tabFieldItemsWithChiefComplaint.entrySet()){
-
-                createPatientEncounterTabFieldsWithChiefComplaintsServiceResponse = encounterService.createPatientEncounterTabFields(entry.getValue(), patientEncounterItem.getId(), currentUserSession.getId(), entry.getKey());
-                if (createPatientEncounterTabFieldsWithChiefComplaintsServiceResponse.hasErrors()){
-
-                    throw new RuntimeException();
-                }
-            }
-        }
-
-        //create patient encounter photos
-        photoService.createEncounterPhotos(request().body().asMultipartFormData().getFiles(), patientEncounterItem, viewModelPost);
-
-        //get the prescriptions that have an ID (e.g. prescriptions that exist in the dictionary).
-        List<PrescriptionItem> prescriptionItemsWithID = viewModelPost.getPrescriptions()
-                .stream()
-                .filter(prescription -> prescription.getMedicationID() != null)
-                .collect(Collectors.toList());
-
-        //create the prescriptions that already have an ID
-        ServiceResponse<PrescriptionItem> createPrescriptionServiceResponse;
-        for (PrescriptionItem prescriptionItem : prescriptionItemsWithID){
-
-            //The POST data sends -1 if an administration ID is not set. Null is more appropriate for the
-            //service layer
-            if (prescriptionItem.getAdministrationID() == -1)
-                prescriptionItem.setAdministrationID(null);
-
-            createPrescriptionServiceResponse = medicationService.createPrescription(
-                    prescriptionItem.getMedicationID(),
-                    prescriptionItem.getAdministrationID(),
-                    patientEncounterItem.getId(),
-                    currentUserSession.getId(),
-                    prescriptionItem.getAmount(),
-                    null);
-
-            if (createPrescriptionServiceResponse.hasErrors()){
-
-                throw new RuntimeException();
-            }
-        }
-
-        // get the prescriptions that DO NOT have an ID (e.g. prescriptions that DO NOT exist in the dictionary).
-        // also ignore new new prescriptions that do not have a name
-        List<PrescriptionItem> prescriptionItemsWithoutID = viewModelPost.getPrescriptions()
-                .stream()
-                .filter( prescription -> prescription.getMedicationID() == null )
-                .filter( prescription -> StringUtils.isNotNullOrWhiteSpace( prescription.getMedicationName() ) )
-                .collect(Collectors.toList());
-
-        for (PrescriptionItem prescriptionItem : prescriptionItemsWithoutID){
-
-            //The POST data sends -1 if an administration ID is not set. Null is more appropriate for the
-            //service layer
-            if (prescriptionItem.getAdministrationID() == -1)
-                prescriptionItem.setAdministrationID(null);
-
-            createPrescriptionServiceResponse = medicationService.createPrescriptionWithNewMedication(
-                    prescriptionItem.getMedicationName(),
-                    prescriptionItem.getAdministrationID(),
-                    patientEncounterItem.getId(),
-                    currentUserSession.getId(),
-                    prescriptionItem.getAmount(),
-                    null);
-
-            if (createPrescriptionServiceResponse.hasErrors()){
-
-                throw new RuntimeException();
-            }
-        }
-
-
-
-        String message = "Patient information for " + patientItem.getFirstName() + " " + patientItem.getLastName() + " (id: " + patientItem.getId() + ") was saved successfully.";
-
-        return ok(index.render(currentUserSession, message, 0));
     }
 
     public Result updateVitalsPost(int id) {

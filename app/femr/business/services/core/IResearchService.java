@@ -18,12 +18,11 @@
 */
 package femr.business.services.core;
 
+import femr.business.services.system.ResearchServiceRefactor;
 import femr.common.dtos.ServiceResponse;
 import femr.common.models.*;
-import femr.ui.models.research.json.ResearchGraphDataModel;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * Interface for the Research Service
@@ -38,7 +37,7 @@ public interface IResearchService {
      * @return a service response that contains graph data bundled for display
      * and/or errors if they exist.
      */
-     ServiceResponse<ResearchResultSetItem> retrieveGraphData(ResearchFilterItem filterItem);
+    ResearchServiceRefactor retrieveGraphData(ResearchFilterItem filterItem);
 
-     ServiceResponse<File> retrieveCsvExportFile(ResearchFilterItem filters);
+    abstract ServiceResponse<File> retrieveCsvExportFile(ResearchFilterItem filters);
 }

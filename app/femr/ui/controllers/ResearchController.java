@@ -102,7 +102,7 @@ public class ResearchController extends Controller {
         FilterViewModel filterViewModel = FilterViewModelForm.bindFromRequest().get();
         ResearchFilterItem researchFilterItem = createResearchFilterItem(filterViewModel);
 
-        ServiceResponse<ResearchResultSetItem> response = researchService.retrieveGraphData(researchFilterItem);
+        ServiceResponse<ResearchResultSetItem> response = researchService.retrieveGraphData(researchFilterItem).getValue();
         ResearchGraphDataModel graphModel = new ResearchGraphDataModel();
         if (!response.hasErrors()) {
 

@@ -4,10 +4,14 @@ import com.google.inject.Inject;
 import femr.business.services.core.IMedicationService;
 import femr.common.dtos.ServiceResponse;
 import femr.common.models.MedicationItem;
+import femr.common.models.PatientEncounterItem;
+import femr.ui.models.triage.IndexViewModelPost;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -82,6 +86,30 @@ public class MedicationServiceTest extends BaseTest {
 
     }
 
+    @Test
+    public void testCreatePatientObject(){
 
+        //create the medication
+        //ServiceResponse<MedicationItem> response = service.createMedication("Medication 1", "formtest", null);
+        PatientEncounterItem  patient = new PatientEncounterItem();
+        patient.setId(12);
+        patient.setNurseFullName("Test Patient");
+       if(patient == null){
+           assertTrue(!patient.equals(null));
+       }
+
+    }
+
+    @Test
+    public void testCreateIndexViewModelPost(){
+        IndexViewModelPost model = new IndexViewModelPost();
+        model.setFirstName("inam");
+        model.setLastName("khh");
+    List<IndexViewModelPost> listValue = new ArrayList<IndexViewModelPost>();
+        listValue.add(model);
+        assertTrue(listValue.size() >0);
+
+
+    }
 
 }
